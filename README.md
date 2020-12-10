@@ -1,2 +1,2 @@
 # flask-celery-rabbitmq
-first time of flask, celery, rabbitmq, redis
+First time of flask, celery, rabbitmq, redis
