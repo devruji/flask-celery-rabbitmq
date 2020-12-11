@@ -1,0 +1,48 @@
+# ref: https://docs.docker.com/compose/compose-file/
+version: "3.8"
+
+services:
+
+##############################
+# -> Database
+#############################
+  db:
+    image: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "banana"
+    networks:
+      - pgsite
+
+##############################
+# -> PGADMIN4
+#############################
+  pg:
+    depends_on:
+      - db
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "postgres@domain.com"
+      PGADMIN_DEFAULT_PASSWORD: "banana"
+    networks:
+      - pgsite
+
+##############################
+# -> NETWORK
+#############################
+networks:
+  pgsite:
+    driver: bridge
+
+##############################
+# -> VOLUME
+#############################
+volumes:
+  db_data:

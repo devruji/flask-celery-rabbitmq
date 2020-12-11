@@ -1,0 +1,61 @@
+version: "3.8"
+
+services:
+  # web:
+  #   build: .
+  #   restart: always
+  #   ports:
+  #     - "5000:5000"
+  #   command: "flask run"
+  #   volumes:
+  #     - ./mnt/web_log:/app/log
+  #   networks:
+  #     - flask-celery-rabbitmq_pgsite
+
+  redis:
+    image: redis:latest
+    restart: always
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    # volumes:
+    #   - ./mnt/redis_log:/data
+    networks:
+      - flask-celery-rabbitmq_pgsite
+
+  rabbit:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASSWORD=guest
+    # volumes:
+    #   - ./mnt/rabbit_log/etc/:/etc/rabbitmq/
+    #   - ./mnt/rabbit_log/data/:/var/lib/rabbitmq/
+    #   - ./mnt/rabbit_log/logs/:/var/log/rabbitmq/
+    networks:
+      - flask-celery-rabbitmq_pgsite
+      - default
+
+  # worker:
+  #   build: .
+  #   restart: always
+  #   command: "celery -A pgsql_connector worker --loglevel=INFO --pidfile=/var/run/celery/%n.pid --logfile=/var/log/celery/%n%I.log"
+  #   user: nobody
+  #   depends_on:
+  #     - rabbit
+  #     - redis
+  #     - web
+  #   volumes:
+  #     - ./mnt/worker_log/run:/var/run/celery/
+  #     - ./mnt/worker_log/log:/var/log/celery/
+  #   networks:
+  #     - flask-celery-rabbitmq_pgsite
+
+networks:
+  default:
+    name: bossruji-network
+  flask-celery-rabbitmq_pgsite:
+    external: true

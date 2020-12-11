@@ -131,3 +131,4 @@ dmypy.json
 # bossruji
 .vscode
 .__pycache__
+.mnt
