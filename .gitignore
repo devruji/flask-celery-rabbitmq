@@ -132,3 +132,4 @@ dmypy.json
 .vscode
 .__pycache__
 .mnt
+*_log

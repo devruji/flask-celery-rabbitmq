@@ -2,10 +2,9 @@
 version: "3.8"
 
 services:
-
-##############################
-# -> Database
-#############################
+  ##############################
+  # -> Database
+  #############################
   db:
     image: postgres
     volumes:
@@ -14,13 +13,13 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_PASSWORD: "banana"
+      POSTGRES_PASSWORD: "password"
     networks:
       - pgsite
 
-##############################
-# -> PGADMIN4
-#############################
+  ##############################
+  # -> PGADMIN4
+  #############################
   pg:
     depends_on:
       - db
@@ -30,7 +29,7 @@ services:
       - "8080:80"
     environment:
       PGADMIN_DEFAULT_EMAIL: "postgres@domain.com"
-      PGADMIN_DEFAULT_PASSWORD: "banana"
+      PGADMIN_DEFAULT_PASSWORD: "password"
     networks:
       - pgsite
 

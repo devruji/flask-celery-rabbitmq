@@ -7,6 +7,7 @@ RUN apt-get update && \
 WORKDIR /app
 
 ENV FLASK_APP=app.py
+ENV FLASK_ENV=development
 ENV FLASK_RUN_HOST=0.0.0.0
 
 COPY requirements.txt requirements.txt

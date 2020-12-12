@@ -15,8 +15,15 @@ import pandas as pd
 logging.basicConfig(filename=os.path.join(
     os.getcwd(), 'log', 'debug.log'), level=logging.DEBUG)
 
+# [App instance]
 app = Flask(__name__, static_folder=os.path.join(os.getcwd(), 'static'),
             template_folder=os.path.join(os.getcwd(), 'templates'))
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 
 @app.route('/hello')
 def hello():
